@@ -1,8 +1,16 @@
 import { DeleteOutlineOutlined, ModeEditOutline } from '@mui/icons-material'
 import React from 'react'
+import { useStateContext } from '../../context/StateContextProvider';
 import { StyledTask, TaskDetails } from './Todo.styles';
 
 function TodoList({task}) {
+  const { tasks, setTasks } = useStateContext();
+  const deleteTask = () => {
+    const newData = [...tasks];
+    const updatedData = newData.filter((data) => data.id !== task.id);
+    setTasks(updatedData);
+    console.log("deleted")
+  }
   return (
     <StyledTask>
         <input type="checkbox" />
@@ -12,7 +20,7 @@ function TodoList({task}) {
         </TaskDetails>
         <div className="options">
             <ModeEditOutline />
-            <DeleteOutlineOutlined />
+            <DeleteOutlineOutlined onClick={deleteTask}/>
         </div>
     </StyledTask>
   )

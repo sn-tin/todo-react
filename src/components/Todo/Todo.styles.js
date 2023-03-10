@@ -60,6 +60,7 @@ const StyledTask = styled.div`
         margin-left: auto;
         svg {
             width: 20px;
+            cursor: pointer;
         }
     }
     @media screen and (min-width: 900px) {

@@ -46,6 +46,7 @@ function StateContextProvider({children}) {
       newTask,
       changeTaskData,
       tasks,
+      setTasks
     }}>
         {children}
     </StateContent.Provider>
