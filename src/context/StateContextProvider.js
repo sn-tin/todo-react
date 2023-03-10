@@ -1,15 +1,32 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { db } from '../firebase';
+import {
+  query,
+  collection,
+  onSnapshot,
+} from 'firebase/firestore';
 
 const StateContent = createContext(null);
 
 function StateContextProvider({children}) {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      task: "Finish todo app",
-      dueDate: "2023-03-09"
-    }
-  ])
+  const [tasks, setTasks] = useState([{
+    id: 1,
+    task: "Task Demo",
+    dueDate: "2023-03-09"
+  }])
+
+  useEffect(() => {
+    const q = query(collection(db, 'todos'))
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      let todosArr = [];
+      querySnapshot.forEach((doc) => {
+        todosArr.push({...doc.data(), id: doc.id})
+      })
+      setTasks(todosArr)
+    });
+    return () => unsubscribe();
+  }, [])
+
   const [isFormOpen, setIsFormOpen] = useState(false);
   const formOpen = () => {
     setIsFormOpen(!isFormOpen)

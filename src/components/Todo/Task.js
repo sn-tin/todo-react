@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useStateContext } from '../../context/StateContextProvider';
 import { StyledTask, TaskDetails } from './Todo.styles';
 
-function TodoList({task}) {
+function Task({task}) {
   const { tasks, setTasks } = useStateContext();
   const deleteTask = () => {
     const newData = [...tasks];
@@ -18,15 +18,6 @@ function TodoList({task}) {
         console.log(currentTask)
     }
     const [currentTask, setCurrentTask] = useState(task);
-    // const editTask = (e) => {
-    //   setCurrentTask(prevTask => {
-    //       const { name, value } = e.target;
-    //       return {
-    //         ...prevTask,
-    //         [name]:value
-    //       }
-    //     })
-    // }
     const editTask = (e) => {
         setCurrentTask(prevData => {
           const { name, value } = e.target;
@@ -51,9 +42,13 @@ function TodoList({task}) {
     const closeEdit = () => {
       setEditing(false)
     }
+    const [isCompleted, setIsCompleted]  = useState(false)
+    const handleCheckbox = (e) => {
+      setIsCompleted(!isCompleted)
+    }
   return (
     <StyledTask>
-        <input type="checkbox" />
+        <input type="checkbox" name="completed" checked={isCompleted} onChange={handleCheckbox}/>
         {
           isEditing ?
           <form onSubmit={submitEdit}>
@@ -64,7 +59,7 @@ function TodoList({task}) {
             </div>
           </form> :
           <TaskDetails>
-              <p className="task">{task.task}</p>
+              <p style={{textDecoration: isCompleted ? "line-through" : "none"}} className="task">{task.task}</p>
               <p className="due"><strong>Due:</strong> {task.dueDate}</p>
           </TaskDetails>
         }
@@ -76,4 +71,4 @@ function TodoList({task}) {
   )
 }
 
-export default TodoList;
+export default Task;
