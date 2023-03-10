@@ -37,6 +37,9 @@ const StyledAddButton = styled.button`
     margin: 50px auto 20px;
 `
 const StyledTaskWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     background-color: ${darkTheme.secondary};
     padding: 20px;
     border-radius: 15px;

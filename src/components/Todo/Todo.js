@@ -5,15 +5,23 @@ import { StyledAddButton, StyledTaskWrapper, StyledTodo } from './Todo.styles';
 import { useStateContext } from '../../context/StateContextProvider';
 
 function Todo() {
-  const { addTaskForm } = useStateContext();
+  const { formOpen, tasks } = useStateContext();
   return (
     <StyledTodo>
         <h1>Hello, Kristine!</h1>
         <p>Here are your tasks.</p>
-        <StyledAddButton onClick={addTaskForm}><AddIcon /> Add New Task</StyledAddButton>
-        <StyledTaskWrapper className="tasks">
-            <Task />
-        </StyledTaskWrapper>
+        <StyledAddButton onClick={formOpen}><AddIcon /> Add New Task</StyledAddButton>
+        { tasks && 
+          <StyledTaskWrapper className="tasks">
+              {
+                tasks.map((data) => {
+                  return (
+                    <Task key={data.id} task={data} />
+                  )
+                }
+              )}
+          </StyledTaskWrapper> 
+        }
     </StyledTodo>
   )
 }
