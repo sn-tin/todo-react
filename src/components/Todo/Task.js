@@ -1,15 +1,18 @@
 import { DeleteOutlineOutlined, ModeEditOutline } from '@mui/icons-material'
+import { deleteDoc, doc } from 'firebase/firestore';
 import React, { useState } from 'react'
 import { useStateContext } from '../../context/StateContextProvider';
+import { db } from '../../firebase';
 import { StyledTask, TaskDetails } from './Todo.styles';
 
 function Task({task}) {
   const { tasks, setTasks } = useStateContext();
-  const deleteTask = () => {
+  const deleteTask = async () => {
     const newData = [...tasks];
     const updatedData = newData.filter((data) => data.id !== task.id);
     setTasks(updatedData);
     console.log("deleted")
+    await deleteDoc(doc(db, 'todos', task.id));
   }
   /* Edit Task */
   const [isEditing, setEditing] = useState(false);
