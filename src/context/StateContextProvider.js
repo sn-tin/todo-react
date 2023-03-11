@@ -4,16 +4,13 @@ import {
   query,
   collection,
   onSnapshot,
+  addDoc,
 } from 'firebase/firestore';
 
 const StateContent = createContext(null);
 
 function StateContextProvider({children}) {
-  const [tasks, setTasks] = useState([{
-    id: 1,
-    task: "Task Demo",
-    dueDate: "2023-03-09"
-  }])
+  const [tasks, setTasks] = useState([])
 
   useEffect(() => {
     const q = query(collection(db, 'todos'))
@@ -23,22 +20,10 @@ function StateContextProvider({children}) {
         todosArr.push({...doc.data(), id: doc.id})
       })
       setTasks(todosArr)
+      console.log(todosArr)
     });
     return () => unsubscribe();
   }, [])
-
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const formOpen = () => {
-    setIsFormOpen(!isFormOpen)
-    setNewTask(initialState)
-  }
-  const formSubmit = (e) => {
-    e.preventDefault()
-    setIsFormOpen(false)
-    setNewTask(initialState)
-    tasks.unshift(newTask)
-    console.log(tasks)
-  }
   /* Add New Task data */ 
   const initialState = {
     task: "",
@@ -53,6 +38,22 @@ function StateContextProvider({children}) {
           id: tasks.length + 1,
           [name]: value
       }
+    })
+  }
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const formOpen = () => {
+    setIsFormOpen(!isFormOpen)
+    setNewTask(initialState)
+  }
+  const formSubmit = async (e) => {
+    e.preventDefault(e)
+    setIsFormOpen(false)
+    setNewTask(initialState)
+    tasks.unshift(newTask)
+    console.log(tasks)
+    await addDoc(collection(db, "todos"), {
+      task: newTask.task,
+      dueDate: newTask.dueDate,
     })
   }
   return (
