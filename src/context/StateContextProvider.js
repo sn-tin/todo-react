@@ -5,6 +5,7 @@ import {
   collection,
   onSnapshot,
   addDoc,
+  orderBy,
 } from 'firebase/firestore';
 
 const StateContent = createContext(null);
@@ -13,7 +14,7 @@ function StateContextProvider({children}) {
   const [tasks, setTasks] = useState([])
 
   useEffect(() => {
-    const q = query(collection(db, 'todos'))
+    const q = query(collection(db, 'todos'), orderBy("dueDate"))
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let todosArr = [];
       querySnapshot.forEach((doc) => {
