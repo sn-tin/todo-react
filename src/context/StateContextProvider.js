@@ -49,11 +49,11 @@ function StateContextProvider({children}) {
     e.preventDefault(e)
     setIsFormOpen(false)
     setNewTask(initialState)
-    tasks.unshift(newTask)
     console.log(tasks)
     await addDoc(collection(db, "todos"), {
       task: newTask.task,
       dueDate: newTask.dueDate,
+      isCompleted: false,
     })
   }
   return (

@@ -1,5 +1,5 @@
 import { DeleteOutlineOutlined, ModeEditOutline } from '@mui/icons-material'
-import { deleteDoc, doc } from 'firebase/firestore';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import React, { useState } from 'react'
 import { useStateContext } from '../../context/StateContextProvider';
 import { db } from '../../firebase';
@@ -8,11 +8,11 @@ import { StyledTask, TaskDetails } from './Todo.styles';
 function Task({task}) {
   const { tasks, setTasks } = useStateContext();
   const deleteTask = async () => {
+    await deleteDoc(doc(db, 'todos', task.id));
     const newData = [...tasks];
     const updatedData = newData.filter((data) => data.id !== task.id);
     setTasks(updatedData);
     console.log("deleted")
-    await deleteDoc(doc(db, 'todos', task.id));
   }
   /* Edit Task */
   const [isEditing, setEditing] = useState(false);
@@ -45,13 +45,21 @@ function Task({task}) {
     const closeEdit = () => {
       setEditing(false)
     }
-    const [isCompleted, setIsCompleted]  = useState(false)
-    const handleCheckbox = (e) => {
-      setIsCompleted(!isCompleted)
+    const handleCheckbox = async (e) => {
+      setCurrentTask((prevTask) => {
+          const { name,checked } = e.target;
+          return {
+            ...prevTask,
+            [name]: checked
+          }
+      })
+      await updateDoc(doc(db, "todos", currentTask.id), {
+        isCompleted: !currentTask.isCompleted
+      })
     }
   return (
     <StyledTask>
-        <input type="checkbox" name="completed" checked={isCompleted} onChange={handleCheckbox}/>
+        <input type="checkbox" name="isCompleted" checked={currentTask.isCompleted} onChange={handleCheckbox}/>
         {
           isEditing ?
           <form onSubmit={submitEdit}>
@@ -62,7 +70,7 @@ function Task({task}) {
             </div>
           </form> :
           <TaskDetails>
-              <p style={{textDecoration: isCompleted ? "line-through" : "none"}} className="task">{task.task}</p>
+              <p style={{textDecoration: currentTask.isCompleted ? "line-through" : "none"}} className="task">{task.task}</p>
               <p className="due"><strong>Due:</strong> {task.dueDate}</p>
           </TaskDetails>
         }
