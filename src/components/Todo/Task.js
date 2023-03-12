@@ -1,6 +1,6 @@
 import { DeleteOutlineOutlined, ModeEditOutline } from '@mui/icons-material'
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import React, { useState } from 'react'
+import { deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react'
 import { useStateContext } from '../../context/StateContextProvider';
 import { db } from '../../firebase';
 import { StyledTask, TaskDetails } from './Todo.styles';
@@ -18,7 +18,6 @@ function Task({task}) {
   const [isEditing, setEditing] = useState(false);
     const handleEdit = () => {
         setEditing(true)
-        console.log(currentTask)
     }
     const [currentTask, setCurrentTask] = useState(task);
     const editTask = (e) => {
@@ -29,7 +28,6 @@ function Task({task}) {
             [name]: value
           }
         })
-        console.log(currentTask.task, currentTask.dueDate)
     }
     const handleUpdateTodo = (id, updatedTodo) => {
       let updatedItem = tasks.map((todo) => {

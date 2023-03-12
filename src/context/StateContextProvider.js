@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { db } from '../firebase';
+import { auth, db } from '../firebase';
+import { set, ref, onValue, remove, update } from "firebase/database";
 import {
   query,
   collection,
@@ -7,10 +8,13 @@ import {
   addDoc,
   orderBy,
 } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 const StateContent = createContext(null);
 
 function StateContextProvider({children}) {
+  // const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
   const [tasks, setTasks] = useState([])
 
   useEffect(() => {
@@ -25,6 +29,7 @@ function StateContextProvider({children}) {
     });
     return () => unsubscribe();
   }, [])
+
   /* Add New Task data */ 
   const initialState = {
     task: "",
@@ -49,9 +54,7 @@ function StateContextProvider({children}) {
   const formSubmit = async (e) => {
     e.preventDefault(e)
     setIsFormOpen(false)
-    setNewTask(initialState)
-    console.log(tasks)
-    await addDoc(collection(db, "todos"), {
+    set(ref(db, `/${auth.currentUser.uid}`), {
       task: newTask.task,
       dueDate: newTask.dueDate,
       isCompleted: false,
@@ -65,7 +68,8 @@ function StateContextProvider({children}) {
       newTask,
       changeTaskData,
       tasks,
-      setTasks
+      setTasks,
+      isLoggedIn, setIsLoggedIn
     }}>
         {children}
     </StateContent.Provider>
