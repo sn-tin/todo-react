@@ -8,12 +8,10 @@ import {
   addDoc,
   orderBy,
 } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
 
 const StateContent = createContext(null);
 
 function StateContextProvider({children}) {
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
   const [tasks, setTasks] = useState([])
 
   useEffect(() => {
@@ -68,7 +66,6 @@ function StateContextProvider({children}) {
       changeTaskData,
       tasks,
       setTasks,
-      isLoggedIn, setIsLoggedIn
     }}>
         {children}
     </StateContent.Provider>

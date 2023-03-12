@@ -4,9 +4,10 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useStateContext } from '../../context/StateContextProvider';
 import { auth, db } from '../../firebase';
+import { StyledAuth, AuthBtn } from './UserLog.styles';
 
 function Login() {
-const { setTasks, isLoggedIn, setIsLoggedIn } = useStateContext();
+const { setTasks, setIsLoggedIn } = useStateContext();
 const navigate = useNavigate();
 useEffect(() => {
   auth.onAuthStateChanged((user) => {
@@ -39,7 +40,6 @@ const onLogin = (e) => {
         console.log(user);
         navigate("/account")
         setUserLogin(initialLogInState)
-        setIsLoggedIn(!isLoggedIn)
     })
     .catch((error) => {
         const errorCode = error.code;
@@ -59,9 +59,9 @@ const onLogin = (e) => {
   }
   return (
     <div>
+        <StyledAuth onSubmit={onLogin}>
         <h1>Welcome!</h1>
         <p>Sign in to continue</p>
-        <form onSubmit={onLogin}>
             <input 
                 type="email" 
                 name="email"
@@ -76,10 +76,9 @@ const onLogin = (e) => {
                 placeholder="Password"
                 onChange={handleUserLogIn}
                 required/>
-            <button>Log In</button>
-            <hr />
-            <Link to="/signup">Create an account</Link>
-        </form>
+            <AuthBtn>Log In</AuthBtn>
+            <small>Don't have an account? <Link to="/signup">Sign Up</Link></small>
+        </StyledAuth>
     </div>
   )
 }

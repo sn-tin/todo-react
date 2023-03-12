@@ -1,6 +1,7 @@
 import { DeleteOutlineOutlined, ModeEditOutline } from '@mui/icons-material'
 import { deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
+import { useAuthContext } from '../../context/AuthContextProvider';
 import { useStateContext } from '../../context/StateContextProvider';
 import { db } from '../../firebase';
 import { StyledTask, TaskDetails } from './Todo.styles';

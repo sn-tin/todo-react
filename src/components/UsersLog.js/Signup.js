@@ -1,7 +1,8 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
+import { AuthBtn, StyledAuth } from './UserLog.styles';
 
 function Signup() {
     const navigate = useNavigate();
@@ -42,9 +43,9 @@ function Signup() {
   }
   return (
     <div>
-        <h1>Hi!</h1>
-        <p>Create a new account</p>
-        <form onSubmit={onSignUp}>
+        <StyledAuth onSubmit={onSignUp}>
+          <h1>Hi!</h1>
+          <p>Create a new account</p>
             <input 
                 type="text"
                 value={userSignUp.name}
@@ -66,8 +67,9 @@ function Signup() {
                 placeholder="Password"
                 onChange={handleUserSignUp} 
                 required/>
-            <button>Sign Up</button>
-        </form>
+            <AuthBtn>Sign Up</AuthBtn>
+            <small>Already have an account? <Link to="/login">Log In</Link></small>
+        </StyledAuth>
     </div>
   )
 }
