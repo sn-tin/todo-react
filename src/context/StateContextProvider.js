@@ -13,7 +13,6 @@ import { useNavigate } from 'react-router-dom';
 const StateContent = createContext(null);
 
 function StateContextProvider({children}) {
-  // const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(true)
   const [tasks, setTasks] = useState([])
 
