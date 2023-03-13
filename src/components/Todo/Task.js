@@ -6,7 +6,6 @@ import { StyledTask, TaskDetails } from './Todo.styles';
 import { ref, remove, update } from 'firebase/database';
 
 function Task({task}) {
-  const { setTask } = useStateContext();
   const deleteTask = () => {
     remove(ref(db, `${auth.currentUser.uid}/${task.uidd}`))
   }
@@ -15,14 +14,14 @@ function Task({task}) {
   const [editedTask, setEditedTask] = useState({
     task: task.task,
     dueDate: task.dueDate,
+    comment: task.comment,
     isCompleted: task.isCompleted,
     uidd: task.uidd,
   })
-  const [tempUidd, setTempUidd] = useState("")
-  const handleEdit = (task) => {
+  const [tempUidd, setTempUidd] = useState(task.uidd)
+  const handleEdit = () => {
         setEditing(true)
-        setTempUidd(task.id)
-        console.log(tempUidd)
+        setTempUidd(task.uidd)
     }
     const editTask = (e) => {
       setEditedTask(prevData => {
@@ -35,10 +34,11 @@ function Task({task}) {
     }
     const submitEdit = (e) => {
         e.preventDefault()
-        update(ref(db, `${auth.currentUser.uid}/${tempUidd.uidd}`), {
+        update(ref(db, `${auth.currentUser.uid}/${task.uidd}`), {
           task: editedTask.task,
           dueDate: editedTask.dueDate,
           isCompleted: editedTask.isCompleted,
+          comment: editedTask.comment,
           uidd: tempUidd
         })
         closeEdit()
@@ -54,6 +54,7 @@ function Task({task}) {
           <form onSubmit={submitEdit}>
             <input type="text" name="task" value={editedTask.task} onChange={editTask} />
             <input type="date" name="dueDate" value={editedTask.dueDate} onChange={editTask} />
+            <input type="comment" name="comment" value={editedTask.comment} onChange={editTask} />
             <div>
               <button style={{marginRight: "8px"}}>Edit</button><button onClick={closeEdit}>Cancel</button>
             </div>
@@ -61,12 +62,16 @@ function Task({task}) {
           <TaskDetails>
               <p style={{textDecoration: editedTask.isCompleted ? "line-through" : "none"}} className="task">{task.task}</p>
               <p className="due"><strong>Due:</strong> {task.dueDate}</p>
+              <em className="comment">Comment: {task.comment}</em>
           </TaskDetails>
         }
-        <div className="options">
-            <ModeEditOutline onClick={() => handleEdit(task)}/>
-            <DeleteOutlineOutlined onClick={deleteTask}/>
-        </div>
+        {  
+         !isEditing &&
+          <div className="options">
+              <ModeEditOutline onClick={handleEdit}/>
+              <DeleteOutlineOutlined onClick={deleteTask}/>
+          </div>
+        }
     </StyledTask>
   )
 }

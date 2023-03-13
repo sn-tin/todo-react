@@ -16,6 +16,7 @@ function StateContextProvider({children}) {
   const initialState = {
     task: "",
     dueDate: "",
+    comment: "",
     isCompleted: false,
   }
   const [task, setTask] = useState(initialState)
@@ -45,10 +46,11 @@ function StateContextProvider({children}) {
       task: task.task,
       dueDate: task.dueDate,
       uidd: task.uidd,
+      comment: task.comment,
       isCompleted: false,
     })
     console.log(task, tasks)
-    setTask(initialState)
+    // setTask(initialState)
   }
   return (
     <StateContent.Provider value={{

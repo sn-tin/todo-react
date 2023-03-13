@@ -84,9 +84,12 @@ const TaskDetails = styled.div`
         font-size: clamp(1rem, 2.5vw, 1.2rem);
         line-height: 22px;
     }
-    .due {
+    .due, .comment {
         color: ${darkTheme.subText};
         font-size: clamp(0.8rem, 2.5vw, 1rem);
+    }
+    .comment {
+        font-size: clamp(0.6rem, 2.5vw, 0.8rem);
     }
     @media screen and (min-width: 900px) {
         margin-left: 20px;

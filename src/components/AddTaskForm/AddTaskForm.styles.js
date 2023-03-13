@@ -35,14 +35,18 @@ const StyledForm = styled.form`
         font-size: clamp(1rem, 2.5vw, 1.1rem);
         margin: 20px auto 0;
     }
-    input {
+    input, textarea {
         width: 100%;
         height: 40px;
         background: #F6EFF9;
         border: 1px solid ${darkTheme.whitishPurple};
         border-radius: 8px;
-        padding: 0 10px;
+        padding: 5px 10px;
         margin: 10px auto 20px;
+        resize: none;
+    }
+    textarea {
+        height: 100px;
     }
     .buttons {
         display: flex;

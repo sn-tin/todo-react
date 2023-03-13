@@ -12,6 +12,8 @@ function AddTaskForm() {
             <input id="task" name="task" value={task?.task} onChange={changeTaskData} required/>
             <label htmlFor="dueDate">Due Date:</label>
             <input type="date" id="dueDate" name="dueDate" value={task?.dueDate} onChange={changeTaskData} required/>
+            <label htmlFor="comment">Comment:</label>
+            <textarea id="comment" name="comment" value={task?.comment} onChange={changeTaskData} required/>
             <div className="buttons">
                 <CancelButton onClick={formOpen}>Cancel</CancelButton>
                 <SubmitButton onClick={formSubmit}>Submit</SubmitButton>

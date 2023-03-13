@@ -32,7 +32,8 @@ function Todo() {
   }, [])
   return (
     <StyledTodo>
-        <h1>Hello, {user.email}!</h1>
+        <h1>Hello!</h1>
+        <p><strong>User:</strong> {user.email}.</p>
         <p>Here are your tasks.</p>
         <StyledAddButton onClick={formOpen}><AddIcon /> Add New Task</StyledAddButton>
         

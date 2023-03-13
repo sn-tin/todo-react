@@ -45,7 +45,7 @@ const onLogin = (e) => {
     <div>
         <StyledAuth onSubmit={onLogin}>
         <h1>Welcome!</h1>
-        <p>Sign in to continue</p>
+        <p>Log in to continue</p>
             <input 
                 type="email" 
                 name="email"

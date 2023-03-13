@@ -47,13 +47,6 @@ function Signup() {
           <h1>Hi!</h1>
           <p>Create a new account</p>
             <input 
-                type="text"
-                value={userSignUp.name}
-                name="name" 
-                placeholder="Name"
-                onChange={handleUserSignUp}
-                required/>
-            <input 
                 type="email"
                 value={userSignUp.email}
                 name="email" 
