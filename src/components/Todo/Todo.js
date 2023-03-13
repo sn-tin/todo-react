@@ -15,7 +15,6 @@ function Todo() {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        // read
         onValue(ref(db, `/${auth.currentUser.uid}`), (snapshot) => {
           setTasks([]);
           const data = snapshot.val();

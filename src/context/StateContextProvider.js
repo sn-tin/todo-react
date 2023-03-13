@@ -1,13 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { auth, db } from '../firebase';
-import { set, ref, onValue, remove, update } from "firebase/database";
-import {
-  query,
-  collection,
-  onSnapshot,
-  addDoc,
-  orderBy,
-} from 'firebase/firestore';
+import { set, ref } from "firebase/database";
 import { uid } from 'uid';
 
 const StateContent = createContext(null);
