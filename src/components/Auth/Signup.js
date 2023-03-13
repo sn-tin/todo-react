@@ -17,7 +17,7 @@ function Signup() {
     e.preventDefault()
     await createUserWithEmailAndPassword(auth, userSignUp.email, userSignUp.password)
       .then((userCredential) => {
-          // Signed in
+          // Signed up
           const user = userCredential.user;
           console.log(user);
           navigate("/")

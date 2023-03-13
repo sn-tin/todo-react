@@ -9,23 +9,7 @@ import { StyledAuth, AuthBtn } from './Auth.styles';
 function Login() {
 const { setTasks } = useStateContext();
 const navigate = useNavigate();
-useEffect(() => {
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      // read
-      onValue(ref(db, `/${auth.currentUser.uid}`), (snapshot) => {
-        const data = snapshot.val();
-        if (data !== null) {
-          Object.values(data).map((todo) => {
-            setTasks((oldArray) => [...oldArray, todo]);
-          });
-        }
-      });
-    } else if (!user) {
-      navigate("/");
-    }
-  });
-}, [])
+
 const initialLogInState = {
     email: "", 
     password: ""

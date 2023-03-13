@@ -8,61 +8,53 @@ import {
   addDoc,
   orderBy,
 } from 'firebase/firestore';
+import { uid } from 'uid';
 
 const StateContent = createContext(null);
 
 function StateContextProvider({children}) {
-  const [tasks, setTasks] = useState([])
-
-  useEffect(() => {
-    const q = query(collection(db, 'todos'), orderBy("dueDate"))
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let todosArr = [];
-      querySnapshot.forEach((doc) => {
-        todosArr.push({...doc.data(), id: doc.id})
-      })
-      setTasks(todosArr)
-      console.log(todosArr)
-    });
-    return () => unsubscribe();
-  }, [])
-
-  /* Add New Task data */ 
   const initialState = {
     task: "",
     dueDate: "",
+    isCompleted: false,
   }
-  const [newTask, setNewTask] = useState(initialState)
+  const [task, setTask] = useState(initialState)
+  const [tasks, setTasks] = useState([])
+
+  /* Add New Task data */ 
   const changeTaskData = (e) => {
-    setNewTask((prevData) => {
+    setTask((prevData) => {
       const {name, value} = e.target
+      const uidd = uid()
       return {
           ...prevData,
-          id: tasks.length + 1,
-          [name]: value
+          uidd: uidd,
+          [name]: value,
       }
     })
   }
   const [isFormOpen, setIsFormOpen] = useState(false);
   const formOpen = () => {
     setIsFormOpen(!isFormOpen)
-    setNewTask(initialState)
+    setTask(initialState)
   }
   const formSubmit = async (e) => {
     e.preventDefault(e)
     setIsFormOpen(false)
-    set(ref(db, `/${auth.currentUser.uid}`), {
-      task: newTask.task,
-      dueDate: newTask.dueDate,
+    set(ref(db, `/${auth.currentUser.uid}/${task.uidd}`), {
+      task: task.task,
+      dueDate: task.dueDate,
+      uidd: task.uidd,
       isCompleted: false,
     })
+    console.log(task, tasks)
+    setTask(initialState)
   }
   return (
     <StateContent.Provider value={{
       isFormOpen,
       formOpen,
       formSubmit,
-      newTask,
       changeTaskData,
       tasks,
       setTasks,
