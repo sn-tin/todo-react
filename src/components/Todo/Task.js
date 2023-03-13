@@ -14,7 +14,6 @@ function Task({task}) {
     task: task.task,
     dueDate: task.dueDate,
     comment: task.comment,
-    isCompleted: task.isCompleted,
     uidd: task.uidd,
   })
   const [tempUidd, setTempUidd] = useState(task.uidd)
@@ -36,7 +35,6 @@ function Task({task}) {
         update(ref(db, `${auth.currentUser.uid}/${task.uidd}`), {
           task: editedTask.task,
           dueDate: editedTask.dueDate,
-          isCompleted: editedTask.isCompleted,
           comment: editedTask.comment,
           uidd: tempUidd
         })
@@ -47,7 +45,6 @@ function Task({task}) {
     }
   return (
     <StyledTask>
-        <input type="checkbox" name="isCompleted" checked={editTask.isCompleted} onChange={editTask}/>
         {
           isEditing ?
           <form onSubmit={submitEdit}>
@@ -59,7 +56,7 @@ function Task({task}) {
             </div>
           </form> :
           <TaskDetails>
-              <p style={{textDecoration: editedTask.isCompleted ? "line-through" : "none"}} className="task">{task.task}</p>
+              <p className="task">{task.task}</p>
               <p className="due"><strong>Due:</strong> {task.dueDate}</p>
               <em className="comment">Comment: {task.comment}</em>
           </TaskDetails>
