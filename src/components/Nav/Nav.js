@@ -3,7 +3,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { StyledNav } from './Nav.styles.js';
 import { auth } from '../../firebase.js';
 import { useNavigate } from 'react-router-dom';
-import { useStateContext } from '../../context/StateContextProvider.js';
 import { useAuthContext } from '../../context/AuthContextProvider.js';
 
 function Nav() {
@@ -12,7 +11,7 @@ function Nav() {
   const handleSignOut = async () => {
     try {
       await auth.signOut();
-      navigate("/login")
+      navigate("/")
     } catch (error) {
       alert(error);
     }

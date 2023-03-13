@@ -4,10 +4,10 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useStateContext } from '../../context/StateContextProvider';
 import { auth, db } from '../../firebase';
-import { StyledAuth, AuthBtn } from './UserLog.styles';
+import { StyledAuth, AuthBtn } from './Auth.styles';
 
 function Login() {
-const { setTasks, setIsLoggedIn } = useStateContext();
+const { setTasks } = useStateContext();
 const navigate = useNavigate();
 useEffect(() => {
   auth.onAuthStateChanged((user) => {
@@ -22,7 +22,7 @@ useEffect(() => {
         }
       });
     } else if (!user) {
-      navigate("/login");
+      navigate("/");
     }
   });
 }, [])

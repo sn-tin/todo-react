@@ -2,9 +2,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AddTaskForm from "./components/AddTaskForm/AddTaskForm";
 import Nav from "./components/Nav/Nav";
 import Todo from "./components/Todo/Todo";
-import Login from "./components/UsersLog.js/Login";
-import Protected from "./components/UsersLog.js/Protected";
-import Signup from "./components/UsersLog.js/Signup";
+import Login from "./components/Auth/Login";
+import Protected from "./components/Auth/Protected";
+import Signup from "./components/Auth/Signup";
 import { useStateContext } from "./context/StateContextProvider";
 import { GlobalStyles } from "./styles/GlobalStyles";
 
@@ -17,7 +17,7 @@ function App() {
         <Nav />
         { isFormOpen && <AddTaskForm /> }
         <Routes>
-          <Route path="/login" element={<Login />}></Route>
+          <Route path="/" element={<Login />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
           <Route
             path="/account"
@@ -27,7 +27,6 @@ function App() {
               </Protected>
             }/>
         </Routes>
-        {/* <Todo /> */}
       </div>
     </BrowserRouter>
   );
