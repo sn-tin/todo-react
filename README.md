@@ -20,8 +20,8 @@ An app to keep track of your daily tasks.
 
 ### Screenshot 📸
 
-![ToDo App 1](src\assets\todo-app-1.jpg)
-![ToDo App 2](src\assets\todo-app-2.jpg)
+![ToDo App 1](.\assets\todo-app-1.jpg)
+![ToDo App 2](.\assets\todo-app-2.jpg)
 
 ### Links 🔗
 
