@@ -1,7 +1,7 @@
 import { DeleteOutlineOutlined, ModeEditOutline } from '@mui/icons-material'
 import React, { useState } from 'react'
 import { auth, db } from '../../firebase';
-import { StyledTask, TaskDetails } from './Todo.styles';
+import { StyledEditForm, StyledTask, TaskDetails } from './Todo.styles';
 import { ref, remove, update } from 'firebase/database';
 
 function Task({task}) {
@@ -47,14 +47,14 @@ function Task({task}) {
     <StyledTask>
         {
           isEditing ?
-          <form onSubmit={submitEdit}>
+          <StyledEditForm onSubmit={submitEdit}>
             <input type="text" name="task" value={editedTask.task} onChange={editTask} />
             <input type="date" name="dueDate" value={editedTask.dueDate} onChange={editTask} />
             <input type="comment" name="comment" value={editedTask.comment} onChange={editTask} />
             <div>
-              <button style={{marginRight: "8px"}}>Edit</button><button onClick={closeEdit}>Cancel</button>
+              <button>Edit</button><button onClick={closeEdit}>Cancel</button>
             </div>
-          </form> :
+          </StyledEditForm> :
           <TaskDetails>
               <p className="task">{task.task}</p>
               <p className="due"><strong>Due:</strong> {task.dueDate}</p>

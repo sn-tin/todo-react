@@ -74,7 +74,6 @@ const StyledTask = styled.div`
     }
 `
 const TaskDetails = styled.div`
-    margin-left: 20px;
     .task {
         color: #000000;
         font-weight: 400;
@@ -88,8 +87,31 @@ const TaskDetails = styled.div`
     .comment {
         font-size: clamp(0.6rem, 2.5vw, 0.8rem);
     }
-    @media screen and (min-width: 900px) {
-        margin-left: 20px;
+`
+const StyledEditForm = styled.form`
+    input {
+        background: #F6EFF9;
+        border: 1px solid ${darkTheme.primary};
+        padding: 5px 10px;
+        margin: 10px auto 5px;
+        resize: none;
+        &:not(:last-of-type) {
+            margin-right: 5px;
+        }
+    }
+    button {
+        &:not(:last-of-type) {
+            margin-right: 5px;
+        }
+        &:nth-child(1) {
+            background-color: #FFFFFF;
+            padding: 5px 20px;
+        }
+        &:nth-child(2) {
+            color: #FFFFFF;
+            background-color: ${darkTheme.violet};
+            padding: 5px 20px;
+        }
     }
 `
-export { StyledTodo, StyledAddButton, StyledTaskWrapper, StyledTask, TaskDetails }
+export { StyledTodo, StyledAddButton, StyledTaskWrapper, StyledTask, TaskDetails, StyledEditForm }
